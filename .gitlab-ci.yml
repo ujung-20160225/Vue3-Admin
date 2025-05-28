@@ -1,0 +1,26 @@
+stages:
+    - build_test
+    - deploy
+
+build_test:
+    stage: build_test
+    script:
+        - npm run i
+        - npm run xid:build
+        - ssh root@xxx.x.x.xxx -p2222 'rm -rf /opt/nginxWebsite/xid/dist'
+        - scp -r -P 2222 packages/xid/dist root@xxx.x.x.xxx:/opt/nginxWebsite/xid/
+
+        - npm run test:build
+        - ssh root@xxx.x.x.xxx -p2222 'rm -rf /opt/nginxWebsite/test/dist'
+        - scp -r -P 2222 packages/test/dist root@xxx.x.x.xxx:/opt/nginxWebsite/test/
+
+        - npm run docs:build || true
+        - ssh root@xxx.x.x.xxx -p2222 'rm -rf /opt/nginxWebsite/brick-docs/dist'
+        - scp -r -P 2222 docs/.vitepress/dist root@xxx.x.x.xxx:/opt/nginxWebsite/brick-docs/
+
+        - curl "http://xxx.x.x.xxx:xxxx/api/updata" || true
+
+deploy:
+    stage: deploy
+    script:
+        - echo "deploy..."
