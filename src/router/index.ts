@@ -4,22 +4,22 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 
 const routes = [
-    {
-      path: '/layout',
-      component: () => import('@/views/layout/index.vue'),
-      children: pagesRoutes
-    },
-    {
-      path: '/login',
-      component: () => import('@/views/login/index.vue'),
-      hidden: true
-    },
-    {
-      path: '/error',
-      component: () => import('@/views/404/index.vue'),
-      hidden: true
-    }
-  ];
+  {
+    path: '/layout',
+    component: () => import('@/views/layout/index.vue'),
+    children: pagesRoutes
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index.vue'),
+    hidden: true
+  },
+  {
+    path: '/error',
+    component: () => import('@/views/404/index.vue'),
+    hidden: true
+  }
+];
 
 // 组合路由信息
 // import.meta.glob 为 vite 提供的特殊导入方式
@@ -34,24 +34,24 @@ const routes = [
 //     routes.push(module);
 // });
 // routes.push(aboutRouter);
-console.log(routes)
+console.log(routes);
 const router = createRouter({
-    history: createWebHashHistory(),
-    routes
+  history: createWebHashHistory(),
+  routes
 });
 
 const noStatusPage = ['/login', '/about'];
 router.beforeEach(async (_to, _from, next) => {
-    NProgress.start();
-    const token = sessionStorage.getItem('userInfo');
-    const userIsLogin = token ? true : false;
-    if (userIsLogin || noStatusPage.includes(_to.path)) {
-        next();
-    } else {
-        next('/login');
-    }
+  NProgress.start();
+  const token = sessionStorage.getItem('userInfo');
+  const userIsLogin = token ? true : false;
+  if (userIsLogin || noStatusPage.includes(_to.path)) {
+    next();
+  } else {
+    next('/login');
+  }
 });
 router.afterEach((_to) => {
-    NProgress.done();
+  NProgress.done();
 });
 export default router;
