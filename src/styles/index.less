@@ -1,5 +1,47 @@
-@import url('./variable.less'); // 存放项目统一规范的变量
-@import url('./reset.less'); // 重置浏览器默认样式
-@import url('./custom.less'); // 自定义的 css 样式
-@import url('./theme/index.less'); // 自定义主题样式
-@import url('./element-ui.less'); // 修改 element-ui 样式
+// 全局 CSS 变量
+@import './variable.less';
+// Transition
+@import './transition.less';
+// Element Plus
+@import './element-plus.less';
+
+// 业务页面几乎都应该在根元素上挂载 class="app-container"，以保持页面美观
+.app-container {
+  padding: 20px;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background-color: var(--smart-desk-body-bg-color);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial,
+    sans-serif;
+  // @include scrollbar();
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+a,
+a:focus,
+a:hover {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}

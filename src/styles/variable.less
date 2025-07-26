@@ -1,15 +1,47 @@
+/** 全局 CSS 变量，这种变量不仅可以在 CSS 和 SCSS 中使用，还可以导入到 JS 中使用 */
 :root {
-    // 主色调
-    --color-main: #509eff;
-    --color-main-light-1: #776bff;
-    --color-main-light-2: #ffe9cd7a;
-    // 背景主色调
-    --backgroud-color: white;
-    // 适配黑色主题的字体色
-    --color-dark-black: black;
-    --color-dark-gray: gray;
+  /** 全局背景色 */
+  --smart-desk-body-bg-color: #f2f3f5;
+  /** Header 区域 = NavigationBar 组件 + TagsView 组件 */
+  --smart-desk-header-height: calc(var(--smart-desk-navigationbar-height) + var(--smart-desk-tagsview-height));
+  /** NavigationBar 组件 */
+  --smart-desk-navigationbar-height: 50px;
+  /** Sidebar 组件 */
+  --smart-desk-sidebar-width: 220px;
+  --smart-desk-sidebar-hide-width: 58px;
+  --smart-desk-sidebar-menu-item-height: 60px;
+  --smart-desk-sidebar-menu-tip-line-bg-color: var(--el-color-primary);
+  --smart-desk-sidebar-menu-bg-color: #001428;
+  --smart-desk-sidebar-menu-hover-bg-color: #ffffff10;
+  --smart-desk-sidebar-menu-text-color: #c0c4cc;
+  --smart-desk-sidebar-menu-active-text-color: #fff;
+  /** SidebarLogo 组件 */
+  --smart-desk-sidebarlogo-bg-color: #001428;
+  /** TagsView 组件 */
+  --smart-desk-tagsview-height: 34px;
+  --smart-desk-tagsview-tag-text-color: #495060;
+  --smart-desk-tagsview-tag-active-text-color: #fff;
+  --smart-desk-tagsview-tag-bg-color: #fff;
+  --smart-desk-tagsview-tag-active-bg-color: var(--el-color-primary);
+  --smart-desk-tagsview-tag-border-radius: 2px;
+  --smart-desk-tagsview-tag-border-color: #d8dce5;
+  --smart-desk-tagsview-tag-active-border-color: var(--el-color-primary);
+  --smart-desk-tagsview-tag-active-before-color: #fff;
+  --smart-desk-tagsview-tag-icon-hover-bg-color: #00000030;
+  --smart-desk-tagsview-tag-icon-hover-color: #fff;
+  /** RightPanel 组件  */
+  --smart-desk-rightpanel-button-bg-color: #001428;
+  /** dialog 组件 */
+  --smart-desk-dialog-border-radius: 5px;
 }
 
-body {
-    background-color: var(--backgroud-color);
+/** 内容区放大时，将不需要的组件隐藏 */
+body.content-large {
+  /** Header 区域 = TagsView 组件 */
+  --smart-desk-header-height: var(--smart-desk-tagsview-height);
+  /** NavigationBar 组件 */
+  --smart-desk-navigationbar-height: 0;
+  /** Sidebar 组件 */
+  --smart-desk-sidebar-width: 0;
+  --smart-desk-sidebar-hide-width: 0;
 }

@@ -1,9 +1,9 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
-export function storeUserLogin(params: any) {
-  return request({
-    url: "/user/login",
-    method: "POST",
-    params: params,
-  });
+interface UserLoginParams {
+  username: string;
+  password: string;
+}
+export function userLoginApi(data: UserLoginParams) {
+  return request.post('/users/login', data);
 }
