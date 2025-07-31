@@ -1,6 +1,12 @@
 <template>
   <div class="navigation-bar">
     <div class="right-menu">
+      <div class="op op--lang" @click="onToggleLang">
+        <div class="icon icon--language">
+          <img v-show="language === 'zh'" src="@/assets/img/lang-zh.svg" />
+          <img v-show="language === 'en'" src="@/assets/img/lang-en.svg" />
+        </div>
+      </div>
       <el-dropdown class="right-menu-item">
         <div class="right-menu-avatar">
           <span>👨🏻‍💻 {{ username }}</span>
@@ -20,9 +26,26 @@
 <script lang="ts" setup>
   import router from '@/router/index';
   import { useUserStoreHook } from '@/store/modules/user';
+  import { useI18n } from 'vue-i18n';
+
   const userStore = useUserStoreHook();
   const username = userStore.username;
 
+  //languageChange
+  const { locale } = useI18n();
+  const langVal = localStorage.getItem('v_form_locale') || 'zh';
+  if (langVal) {
+    locale.value = langVal;
+  }
+  const language = ref(locale);
+  const onToggleLang = () => {
+    if (language.value === 'en') {
+      language.value = 'zh';
+    } else {
+      language.value = 'en';
+    }
+    localStorage.setItem('v_form_locale', language.value);
+  };
   // 登出
   const logout = () => {
     userStore.logout();

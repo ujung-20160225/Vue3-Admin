@@ -13,7 +13,8 @@ import Pages from 'vite-plugin-pages';
 import ViteCompression from 'vite-plugin-compression';
 import brotli from 'rollup-plugin-brotli';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import path,{resolve} from 'path'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
+import path, { resolve } from 'path';
 
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   // 获取当前工作目录
@@ -23,14 +24,10 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   console.log('env', env);
 
   return {
-    // 运行后本地预览的服务器
     server: {
-      // 指定服务器应该监听哪个 IP 地址。 如果将此设置为 0.0.0.0 或者 true 将监听所有地址，包括局域网和公网地址。
-      host: true,
-      // 开发环境预览服务器端口
-      port: 9000,
-      // 启动后是否自动打开浏览器
-      open: false,
+      host: true, // 指定服务器应该监听哪个 IP 地址。 如果将此设置为 0.0.0.0 或者 true 将监听所有地址，包括局域网和公网地址。
+      port: 9000, // 开发环境预览服务器端口
+      open: false, // 启动后是否自动打开浏览器
       proxy: {
         '/api': {
           target: 'https://m1.apifoxmock.com/m1/6136080-5827865-default/api',
@@ -39,10 +36,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
         }
       }
     },
-    // 项目根目录
-    root,
-    // 项目部署的基础路径
-    base: './',
+    root, // 项目根目录
+    base: './', // 项目部署的基础路径
     publicDir: fileURLToPath(new URL('./public', import.meta.url)), // 无需处理的静态资源位置
     assetsInclude: fileURLToPath(new URL('./src/assets', import.meta.url)), // 需要处理的静态资源位置
     css: {
@@ -53,10 +48,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }
     },
     plugins: [
-      // Vue模板文件编译插件
-      vue(),
-      // jsx文件编译插件
-      vueJsx(),
+      vue(), // Vue模板文件编译插件
+      vueJsx(), // jsx文件编译插件
       Pages({
         dirs: ['src/pages']
       }),
@@ -66,15 +59,12 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       //     ext: '.gz',
       //     algorithm: 'gzip'
       // }),
-      // 开启ElementPlus自动引入CSS
-      ElementPlus({}),
+      ElementPlus({}), // 开启ElementPlus自动引入CSS
       // 自动导入组件
       AutoImport({
-        // 定义需要自动引入的框架
-        imports: ['vue', 'vue-router', 'pinia'],
-        // 处理eslint
+        imports: ['vue', 'vue-router', 'pinia'], // 定义需要自动引入的框架
         eslintrc: {
-          enabled: true
+          enabled: true // 处理eslint
         },
         resolvers: [ElementPlusResolver(), IconsResolver()],
         dts: fileURLToPath(new URL('./types/auto-imports.d.ts', import.meta.url))
@@ -89,25 +79,34 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
       }),
       /** SVG */
       createSvgIconsPlugin({
+        // 指定 SVG 图标目录（绝对路径）
         iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
-        symbolId: 'icon-[dir]-[name]'
+        // 定义 symbolId 格式
+        symbolId: 'icon-[dir]-[name]',
+        // 可选：自定义插入位置
+        inject: 'body-last',
+        // 可选：启用开发时热更新
+        hotUpdate: true
+      }),
+      VueI18nPlugin({
+        include: [
+          path.resolve(__dirname, 'src/locales/*.yaml'), // 全局翻译文件
+          path.resolve(__dirname, 'src/**/*.vue')
+        ], // 处理所有 .vue 文件
+        compositionOnly: false // 支持 Options API
       })
     ],
 
     // 打包配置
     build: {
-      // 关闭 sorcemap 报错不会映射到源码
-      sourcemap: false,
-      // 打包大小超出 400kb 提示警告
-      chunkSizeWarningLimit: 400,
+      sourcemap: false, // 关闭 sorcemap 报错不会映射到源码
+      chunkSizeWarningLimit: 400, // 打包大小超出 400kb 提示警告
       rollupOptions: {
-        // 打包入口文件 根目录下的 index.html
-        // 也就是项目从哪个文件开始打包
         input: {
-          index: fileURLToPath(new URL('./index.html', import.meta.url))
+          index: fileURLToPath(new URL('./index.html', import.meta.url)) // 打包入口文件也就是项目从哪个文件开始打包
         },
-        // 静态资源分类打包
         output: {
+          // 静态资源分类打包
           format: 'esm',
           chunkFileNames: 'static/js/[name]-[hash].js',
           entryFileNames: 'static/js/[name]-[hash].js',

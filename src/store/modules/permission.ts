@@ -45,7 +45,7 @@ export const usePermissionStore = defineStore('permissionInfo', () => {
           path: '/settings',
           redirect: '/settings/user',
           meta: {
-            svgIcon: 'setting',
+            svgIcon: 'menu',
             title: '系统设置'
           },
           children: [
@@ -53,7 +53,7 @@ export const usePermissionStore = defineStore('permissionInfo', () => {
               name: 'user',
               path: '/settings/user',
               meta: {
-                svgIcon: 'user',
+                svgIcon: '',
                 title: '用户设置'
               },
               component: () => import('@/pages/settings/user/index.vue')
@@ -62,7 +62,7 @@ export const usePermissionStore = defineStore('permissionInfo', () => {
               name: 'role',
               path: '/settings/role',
               meta: {
-                svgIcon: 'role',
+                svgIcon: '',
                 title: '角色设置'
               },
               component: () => import('@/pages/settings/role/index.vue')
@@ -71,7 +71,7 @@ export const usePermissionStore = defineStore('permissionInfo', () => {
               name: 'menu',
               path: '/settings/menu',
               meta: {
-                svgIcon: 'menu',
+                svgIcon: '',
                 title: '菜单设置'
               },
               component: () => import('@/pages/settings/menu/index.vue')

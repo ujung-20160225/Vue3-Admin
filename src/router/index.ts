@@ -2,106 +2,25 @@ import pagesRoutes from '~pages';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import Layout from '@/views/layout/index.vue'
 
 const routes = [
   {
-    path: '/404',
-    component: () => import('@/views/error-page/index.vue'),
-    meta: {
-      hidden: true
-    },
-    alias: '/:pathMatch(.*)*'
+    path: '/',
+    component: () => import('@/views/layout/index.vue'),
+    redirect: 'dashboard',
+    children: pagesRoutes
   },
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
-    meta: {
-      hidden: true
-    }
+    hidden: true
   },
   {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        name: 'Dashboard',
-        path: '/dashboard',
-        meta: {
-          svgIcon: 'dashboard',
-          title: '首页'
-        },
-        component: () => import('@/pages/dashboard/index.vue')
-      },
-      {
-        name: 'About',
-        path: '/about',
-        meta: {
-          svgIcon: 'hot',
-          title: '其它'
-        },
-        component: () => import('@/pages/about/index.vue')
-      },
-      {
-        name: 'Settings',
-        path: '/settings',
-        redirect: '/settings/user',
-        meta: {
-          svgIcon: 'setting',
-          title: '系统设置'
-        },
-        children: [
-          {
-            name: 'user',
-            path: '/settings/user',
-            meta: {
-              svgIcon: 'user',
-              title: '用户设置'
-            },
-            component: () => import('@/pages/settings/user/index.vue')
-          },
-          {
-            name: 'role',
-            path: '/settings/role',
-            meta: {
-              svgIcon: 'role',
-              title: '角色设置'
-            },
-            component: () => import('@/pages/settings/role/index.vue')
-          },
-          {
-            name: 'menu',
-            path: '/settings/menu',
-            meta: {
-              svgIcon: 'menu',
-              title: '菜单设置'
-            },
-            component: () => import('@/pages/settings/menu/index.vue')
-          }
-        ]
-      }
-    ]
+    path: '/404',
+    component: () => import('@/views/error-page/index.vue'),
+    hidden: true
   }
 ];
-// const routes = [
-//   {
-//     path: '/',
-//     component: () => import('@/views/layout/index.vue'),
-//     redirect: 'dashboard',
-//     children: pagesRoutes
-//   },
-//   {
-//     path: '/login',
-//     component: () => import('@/views/login/index.vue'),
-//     hidden: true
-//   },
-//   {
-//     path: '/404',
-//     component: () => import('@/views/error-page/index.vue'),
-//     hidden: true
-//   }
-// ];
 
 // 组合路由信息
 // import.meta.glob 为 vite 提供的特殊导入方式
