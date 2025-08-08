@@ -1,5 +1,11 @@
 <template>
-  <div v-if="!props.item.meta?.hidden" :class="{ 'simple-mode': props.isCollapse, 'first-level': props.isFirstLevel }">
+  <div
+    v-if="!props.item.meta?.hidden"
+    :class="{
+      'simple-mode': props.isCollapse,
+      'first-level': props.isFirstLevel
+    }"
+  >
     <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild.children">
       <SidebarItemLink v-if="theOnlyOneChild.meta" :to="resolvePath(theOnlyOneChild.path)">
         <el-menu-item :index="resolvePath(theOnlyOneChild.path)">
@@ -47,86 +53,87 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { type RouteRecordRaw } from 'vue-router';
-  import SidebarItemLink from './SidebarItemLink.vue';
-  import { isExternal } from '@/utils/validate';
-  import path from 'path-browserify';
+import { computed } from 'vue';
+import { type RouteRecordRaw } from 'vue-router';
+import SidebarItemLink from './SidebarItemLink.vue';
+import { isExternal } from '@/utils/validate';
+import path from 'path-browserify';
 
-  interface Props {
-    item: RouteRecordRaw;
-    isCollapse?: boolean;
-    isFirstLevel?: boolean;
-    basePath?: string;
+interface Props {
+  item: RouteRecordRaw;
+  isCollapse?: boolean;
+  isFirstLevel?: boolean;
+  basePath?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isCollapse: false,
+  isFirstLevel: true,
+  basePath: ''
+});
+
+/** 是否始终显示根菜单 */
+const alwaysShowRootMenu = computed(() => props.item.meta?.alwaysShow);
+
+/** 显示的子菜单 */
+const showingChildren = computed(() => {
+  return props.item.children?.filter((child) => !child.meta?.hidden) ?? [];
+});
+
+/** 显示的子菜单数量 */
+const showingChildNumber = computed(() => {
+  return showingChildren.value.length;
+});
+
+/** 唯一的子菜单项 */
+const theOnlyOneChild = computed(() => {
+  const number = showingChildNumber.value;
+  switch (true) {
+    case number > 1:
+      return null;
+    case number === 1:
+      return showingChildren.value[0];
+    default:
+      return { ...props.item, path: '' };
   }
+});
 
-  const props = withDefaults(defineProps<Props>(), {
-    isCollapse: false,
-    isFirstLevel: true,
-    basePath: ''
-  });
-
-  /** 是否始终显示根菜单 */
-  const alwaysShowRootMenu = computed(() => props.item.meta?.alwaysShow);
-
-  /** 显示的子菜单 */
-  const showingChildren = computed(() => {
-    return props.item.children?.filter((child) => !child.meta?.hidden) ?? [];
-  });
-
-  /** 显示的子菜单数量 */
-  const showingChildNumber = computed(() => {
-    return showingChildren.value.length;
-  });
-
-  /** 唯一的子菜单项 */
-  const theOnlyOneChild = computed(() => {
-    const number = showingChildNumber.value;
-    switch (true) {
-      case number > 1:
-        return null;
-      case number === 1:
-        return showingChildren.value[0];
-      default:
-        return { ...props.item, path: '' };
-    }
-  });
-
-  /** 解析路径 */
-  const resolvePath = (routePath: string) => {
-    switch (true) {
-      case isExternal(routePath):
-        return routePath;
-      case isExternal(props.basePath):
-        return props.basePath;
-      default:
-        return path.resolve(props.basePath, routePath);
-    }
-  };
+/** 解析路径 */
+const resolvePath = (routePath: string) => {
+  switch (true) {
+    case isExternal(routePath):
+      return routePath;
+    case isExternal(props.basePath):
+      return props.basePath;
+    default:
+      return path.resolve(props.basePath, routePath);
+  }
+};
 </script>
 <style lang="less" scoped>
-  .svg-icon {
-    min-width: 1em;
-    margin-right: 12px;
-    font-size: 18px;
-  }
+.svg-icon {
+  margin-right: 12px;
+  min-width: 1em;
+  font-size: 18px;
+}
 
-  .el-icon {
-    width: 1em;
-    margin-right: 12px;
-    font-size: 18px;
-  }
+.el-icon {
+  margin-right: 12px;
+  width: 1em;
+  font-size: 18px;
+}
 
-  .simple-mode {
-    &.first-level {
-      :deep(.el-sub-menu) {
-        .el-sub-menu__icon-arrow {
-          display: none;
-        }
-        span {
-          visibility: hidden;
-        }
+.simple-mode {
+  &.first-level {
+    :deep(.el-sub-menu) {
+      .el-sub-menu__icon-arrow {
+        display: none;
+      }
+
+      span {
+        visibility: hidden;
       }
     }
   }
+}
 </style>

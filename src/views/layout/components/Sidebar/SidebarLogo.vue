@@ -9,17 +9,17 @@
 </template>
 <script lang="ts" setup></script>
 <style lang="less" scoped>
-  .sidebar-logo-container {
-    position: relative;
-    width: 100%;
-    height: var(--smart-desk-header-height);
-    line-height: var(--smart-desk-header-height);
-    background-color: var(--smart-desk-sidebarlogo-bg-color);
-    padding: 0 20px;
+.sidebar-logo-container {
+  position: relative;
+  padding: 0 20px;
+  width: 100%;
+  height: var(--smart-desk-header-height);
+  background-color: var(--smart-desk-sidebarlogo-bg-color);
+  line-height: var(--smart-desk-header-height);
 
-    .sidebar-logo-text {
-      width: 100%;
-      vertical-align: middle;
-    }
+  .sidebar-logo-text {
+    width: 100%;
+    vertical-align: middle;
   }
+}
 </style>

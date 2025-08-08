@@ -3,5 +3,6 @@
 public/*
 /mock/*
 /node_modules/*
+/node_modules/**
 /plop-templates/*
 /types/*

@@ -7,11 +7,11 @@
   </router-link>
 </template>
 <script lang="ts" setup>
-  import { isExternal } from '@/utils/validate';
+import { isExternal } from '@/utils/validate';
 
-  interface Props {
-    to: string;
-  }
+interface Props {
+  to: string;
+}
 
-  const props = defineProps<Props>();
+const props = defineProps<Props>();
 </script>

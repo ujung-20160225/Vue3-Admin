@@ -12,32 +12,32 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { ElMessage } from 'element-plus';
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
+import { ElMessage } from 'element-plus';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
-  ElMessage.error(t('title'));
+ElMessage.error(t('title'));
 </script>
 <style scoped>
-  .demonstration {
-    color: var(--el-text-color-secondary);
-  }
+.demonstration {
+  color: var(--el-text-color-secondary);
+}
 
-  .el-carousel__item h3 {
-    color: #475669;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
-    text-align: center;
-  }
+.el-carousel__item h3 {
+  margin: 0;
+  text-align: center;
+  color: #475669;
+  opacity: 0.75;
+  line-height: 150px;
+}
 
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
 
-  .el-carousel__item:nth-child(2n + 1) {
-    background-color: #d3dce6;
-  }
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
 </style>
 <i18n lang="yaml">
 en:

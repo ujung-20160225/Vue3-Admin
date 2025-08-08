@@ -18,28 +18,28 @@
 </template>
 
 <script lang="ts" setup>
-  import router from '@/router/index';
-  import { reactive } from 'vue';
-  import { useUserStoreHook } from '@/store/modules/user';
+import router from '@/router/index';
+import { reactive } from 'vue';
+import { useUserStoreHook } from '@/store/modules/user';
 
-  const userStore = useUserStoreHook();
-  // do not use same name with ref
-  const form = reactive({
-    userName: '',
-    userPwd: '',
-    rememberMe: false
-  });
+const userStore = useUserStoreHook();
+// do not use same name with ref
+const form = reactive({
+  userName: '',
+  userPwd: '',
+  rememberMe: false
+});
 
-  const onSubmit = async () => {
-    await userStore.storeUserLogin(form);
-    router.push('/dashboard');
-  };
+const onSubmit = async () => {
+  await userStore.storeUserLogin(form);
+  router.push('/dashboard');
+};
 </script>
 <style lang="less" scoped>
-  .login_container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+.login_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 </style>

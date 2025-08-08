@@ -13,43 +13,44 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { useRoute } from 'vue-router';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-  const route = useRoute();
+const route = useRoute();
 
-  const key = computed(() => {
-    return route.fullPath;
-  });
+const key = computed(() => {
+  return route.fullPath;
+});
 </script>
 
 <style lang="less" scoped>
-  .app-main {
-    min-height: calc(100vh - var(--smart-desk-navigationbar-height));
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-    background-color: var(--smart-desk-body-bg-color);
-  }
+.app-main {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - var(--smart-desk-navigationbar-height));
+  background-color: var(--smart-desk-body-bg-color);
+  flex: 1;
+}
 
-  .app-scrollbar {
-    height: 100%;
-    overflow: auto;
-    // @include scrollbar;
+.app-scrollbar {
+  overflow: auto;
+  height: 100%;
+  // @include scrollbar;
+}
+
+.fixed-header + .app-main {
+  overflow: auto;
+  padding-top: var(--smart-desk-navigationbar-height);
+  height: 100vh;
+}
+
+.hasTagsView {
+  .app-main {
+    min-height: calc(100vh - var(--smart-desk-header-height));
   }
 
   .fixed-header + .app-main {
-    padding-top: var(--smart-desk-navigationbar-height);
-    height: 100vh;
-    overflow: auto;
+    padding-top: var(--smart-desk-header-height);
   }
-
-  .hasTagsView {
-    .app-main {
-      min-height: calc(100vh - var(--smart-desk-header-height));
-    }
-    .fixed-header + .app-main {
-      padding-top: var(--smart-desk-header-height);
-    }
-  }
+}
 </style>

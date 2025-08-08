@@ -14,79 +14,82 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { AppMain, NavigationBar, Sidebar } from './components';
+import { AppMain, NavigationBar, Sidebar } from './components';
 </script>
 
 <style lang="less" scoped>
-  @transition-time: 0.35s;
-  .app-wrapper {
-    position: relative;
-    width: 100%;
-  }
+@transition-time: 0.35s;
 
-  .showGreyMode {
-    filter: grayscale(1);
-  }
+.app-wrapper {
+  position: relative;
+  width: 100%;
+}
 
-  .showColorWeakness {
-    filter: invert(0.8);
-  }
+.showGreyMode {
+  filter: grayscale(1);
+}
 
-  .drawer-bg {
-    background-color: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
+.showColorWeakness {
+  filter: invert(0.8);
+}
 
+.drawer-bg {
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.3;
+}
+
+.main-container {
+  position: relative;
+  margin-left: var(--smart-desk-sidebar-width);
+  min-height: 100%;
+  transition: margin-left @transition-time;
+}
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+  overflow: hidden;
+  width: var(--smart-desk-sidebar-width) !important;
+  height: 100%;
+  font-size: 0;
+  transition: width @transition-time;
+}
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - var(--smart-desk-sidebar-width));
+  transition: width @transition-time;
+}
+
+.hideSidebar {
   .main-container {
-    min-height: 100%;
-    transition: margin-left @transition-time;
-    margin-left: var(--smart-desk-sidebar-width);
-    position: relative;
+    margin-left: var(--smart-desk-sidebar-hide-width);
   }
 
   .sidebar-container {
-    transition: width @transition-time;
-    width: var(--smart-desk-sidebar-width) !important;
-    height: 100%;
-    position: fixed;
-    font-size: 0px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1001;
-    overflow: hidden;
+    width: var(--smart-desk-sidebar-hide-width) !important;
   }
 
   .fixed-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 9;
-    width: calc(100% - var(--smart-desk-sidebar-width));
-    transition: width @transition-time;
+    width: calc(100% - var(--smart-desk-sidebar-hide-width));
   }
+}
 
-  .hideSidebar {
-    .main-container {
-      margin-left: var(--smart-desk-sidebar-hide-width);
-    }
-    .sidebar-container {
-      width: var(--smart-desk-sidebar-hide-width) !important;
-    }
-    .fixed-header {
-      width: calc(100% - var(--smart-desk-sidebar-hide-width));
-    }
+.withoutAnimation {
+  .main-container,
+  .sidebar-container {
+    transition: none;
   }
-
-  .withoutAnimation {
-    .main-container,
-    .sidebar-container {
-      transition: none;
-    }
-  }
+}
 </style>
