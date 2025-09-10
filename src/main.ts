@@ -23,4 +23,4 @@ loadSvg(app);
 app.use(router);
 app.use(pinia);
 app.use(i18n);
-app.mount('#app');
+app.mount('#my-vite-app');

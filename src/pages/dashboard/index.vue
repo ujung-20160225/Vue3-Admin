@@ -16,7 +16,7 @@ import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
-ElMessage.error(t('title'));
+ElMessage.warning(t('title'));
 </script>
 <style scoped>
 .demonstration {
